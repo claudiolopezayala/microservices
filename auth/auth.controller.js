@@ -51,3 +51,20 @@ export const deleteOne = async (req, res) => {
   }
 }
 
+export const logIn = async (req, res) => {
+  const { name, password } = req.body;
+  if (!name || !password) {
+    return res.status(400).send('Name and Password are required');
+  }
+
+  try {
+    const user = await User.findOne({ name, password });
+    if (user) {
+      res.status(200).send(user);
+    } else {
+      res.status(404).send("User not found"); 
+    }
+  } catch (err) {
+    res.status(400).send(err);
+  }
+}
