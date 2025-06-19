@@ -28,7 +28,11 @@ export const create = async (req, res) => {
 
 export const findAll = async (req, res) => {
   try{
-    const users = await User.find();
+    const unfilteredUsers = await User.find();
+    const users = unfilteredUsers.map((unfiltereduser) => {
+      const { password, ...user } = unfiltereduser._doc;
+      return user;
+    });
     res.status(200).send(users);
   }
   catch(err){
