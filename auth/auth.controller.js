@@ -1,4 +1,6 @@
 import User from "./user.model.js";
+import pkg from 'jsonwebtoken';
+const { sign } = pkg;
 
 export const service = (req, res) => {
   res.send("This is User Service");
@@ -58,9 +60,11 @@ export const logIn = async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ name, password });
-    if (user) {
-      res.status(200).send(user);
+    const unfiltereduser = await User.findOne({ name, password });
+    if (unfiltereduser) {
+      const { password, ...user } = unfiltereduser._doc;
+      const token = sign(user, process.env.JWT_SECRET);
+      res.status(200).send({ token });
     } else {
       res.status(404).send("User not found"); 
     }
