@@ -23,6 +23,13 @@ services:
       - mongo
       - book
       - customer
+  auth:
+    build: ./auth
+    ports:
+      - "6000:6000"
+    restart: always
+    depends_on:
+      - mongo
   mongo:
     image: mongo
     ports:
@@ -32,4 +39,4 @@ services:
       - data-db:/data/db
 
 volumes:
-    data-db:
+  data-db:

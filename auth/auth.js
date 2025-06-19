@@ -28,7 +28,7 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use('/', router);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 6000;
 app.listen(PORT, () => {
     console.log(`Customer Service is running on port ${PORT}`);
 });
